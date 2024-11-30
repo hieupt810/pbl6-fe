@@ -16,7 +16,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     api
-      .get('/lib')
+      .get('/const')
       .then((resp) => resp.data as Response)
       .then((data) => {
         setCategories(data.category);
