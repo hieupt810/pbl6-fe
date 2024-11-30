@@ -12,6 +12,9 @@ import { useSearchParams } from 'react-router';
 export type SelectItem = {
   id: string;
   name: string;
+  type: number;
+  created_at: string;
+  updated_at: string;
 };
 
 export default function CustomSelect({

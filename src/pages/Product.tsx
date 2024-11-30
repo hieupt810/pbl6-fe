@@ -1,17 +1,30 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import CustomSelect, { SelectItem } from '../components/CustomSelect';
+import api from '../lib/api';
 
-const categories: SelectItem[] = [
-  { id: '1', name: 'Beauty Products' },
-  { id: '2', name: 'Books' },
-];
-
-const timeRanges: SelectItem[] = [
-  { id: '1', name: 'Last 24 hours' },
-  { id: '7', name: 'Last 7 days' },
-  { id: '30', name: 'Last 30 days' },
-];
+type Response = {
+  category: SelectItem[];
+  time: SelectItem[];
+};
 
 export default function ProductPage() {
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState<SelectItem[]>([]);
+  const [timeRanges, setTimeRanges] = useState<SelectItem[]>([]);
+
+  useEffect(() => {
+    api
+      .get('/lib')
+      .then((resp) => resp.data as Response)
+      .then((data) => {
+        setCategories(data.category);
+        setTimeRanges(data.time);
+      })
+      .catch(() => navigate('/error'));
+  }, [navigate]);
+
   return (
     <main className="mx-auto w-full max-w-screen-lg px-6 pt-20 lg:px-8">
       <div>
