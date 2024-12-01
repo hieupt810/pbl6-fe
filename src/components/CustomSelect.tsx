@@ -12,21 +12,18 @@ import { useSearchParams } from 'react-router';
 export type SelectItem = {
   id: string;
   name: string;
-  type: number;
-  created_at: string;
-  updated_at: string;
 };
 
 export default function CustomSelect({
-  options,
-  label,
-  placeholder,
   param,
+  label,
+  options,
+  placeholder,
 }: {
-  options: SelectItem[];
-  label?: string;
-  placeholder: string;
   param: string;
+  label?: string;
+  options: SelectItem[];
+  placeholder: string;
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState<SelectItem | null>(null);

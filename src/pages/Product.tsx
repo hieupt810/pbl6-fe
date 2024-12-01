@@ -1,27 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import CustomSelect, { SelectItem } from '../components/CustomSelect';
+import FilterList, { Filter } from '../components/FilterList';
+import ProductList, { Product } from '../components/ProductList';
 import api from '../lib/api';
 
-type Response = {
-  category: SelectItem[];
-  time: SelectItem[];
+type Pagination = {
+  total_records: number;
+  total_pages: number;
+  current: number;
+  next?: number;
+  prev?: number;
 };
+
+type FilterList = { data: Filter[]; number: number };
+type ProductList = { data: Product[]; pagination: Pagination };
 
 export default function ProductPage() {
   const navigate = useNavigate();
-  const [categories, setCategories] = useState<SelectItem[]>([]);
-  const [timeRanges, setTimeRanges] = useState<SelectItem[]>([]);
+  const [filters, setFilters] = useState<Filter[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     api
       .get('/const')
-      .then((resp) => resp.data as Response)
-      .then((data) => {
-        setCategories(data.category);
-        setTimeRanges(data.time);
-      })
+      .then((resp) => resp.data as FilterList)
+      .then((data) => setFilters(data.data))
+      .catch(() => navigate('/error'));
+  }, [navigate]);
+
+  useEffect(() => {
+    api
+      .get('/product')
+      .then((resp) => resp.data as ProductList)
+      .then((data) => setProducts(data.data))
       .catch(() => navigate('/error'));
   }, [navigate]);
 
@@ -33,18 +45,10 @@ export default function ProductPage() {
         </span>
 
         <div className="flex flex-row flex-wrap items-center gap-x-4 gap-y-2">
-          <CustomSelect
-            options={categories}
-            placeholder="Category"
-            param="category"
-          />
-
-          <CustomSelect
-            options={timeRanges}
-            placeholder="Time range"
-            param="time-range"
-          />
+          <FilterList filters={filters} />
         </div>
+
+        <ProductList products={products} />
       </div>
     </main>
   );
