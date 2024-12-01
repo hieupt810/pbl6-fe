@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import FilterList, { Filter } from '../components/FilterList';
 import ProductList, { Product } from '../components/ProductList';
@@ -18,6 +18,7 @@ type ProductList = { data: Product[]; pagination: Pagination };
 
 export default function ProductPage() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [filters, setFilters] = useState<Filter[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -30,12 +31,30 @@ export default function ProductPage() {
   }, [navigate]);
 
   useEffect(() => {
-    api
-      .get('/product')
-      .then((resp) => resp.data as ProductList)
-      .then((data) => setProducts(data.data))
-      .catch(() => navigate('/error'));
-  }, [navigate]);
+    if (filters.length !== 0) {
+      const params = new URLSearchParams();
+      filters
+        .map((filter) => filter.param)
+        .forEach((param) => {
+          const value = searchParams.get(param);
+          if (value) {
+            params.set(param, value);
+          }
+        });
+
+      api
+        .get('/product', { params })
+        .then((resp) => resp.data as ProductList)
+        .then((data) => setProducts(data.data))
+        .catch(() => navigate('/error'));
+    } else {
+      api
+        .get('/product')
+        .then((resp) => resp.data as ProductList)
+        .then((data) => setProducts(data.data))
+        .catch(() => navigate('/error'));
+    }
+  }, [filters, navigate, searchParams]);
 
   return (
     <main className="mx-auto w-full max-w-screen-lg px-6 pt-20 lg:px-8">
