@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_PUBLIC_API_URL,
@@ -9,33 +9,7 @@ const api = axios.create({
   },
 });
 
-class RequestError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'RequestError';
-  }
-}
-
-api.interceptors.request.use(
-  (config) => config,
-  (error) => {
-    if (error instanceof AxiosError) {
-      return Promise.reject(new RequestError(error.message));
-    } else {
-      return Promise.reject(new RequestError('Something went wrong'));
-    }
-  },
-);
-
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error instanceof AxiosError) {
-      return Promise.reject(new RequestError(error.message));
-    } else {
-      return Promise.reject(new RequestError('Something went wrong'));
-    }
-  },
-);
+api.interceptors.request.use((conf) => conf);
+api.interceptors.response.use((resp) => resp);
 
 export default api;
