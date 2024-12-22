@@ -5,6 +5,7 @@ export type Product = {
   name: string;
   price: string;
   image: string;
+  description: string;
   base: string;
 };
 
@@ -16,7 +17,11 @@ export default function ProductList({ products }: { products: Product[] }) {
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
-            <a key={product.id} href={product.base} className="group">
+            <a
+              key={product.id}
+              href={`/product/${product.id}`}
+              className="group"
+            >
               <img
                 alt={product.id}
                 src={product.image}
