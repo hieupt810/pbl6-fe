@@ -35,7 +35,6 @@ export default tseslint.config(
       ],
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
-      'no-console': 'warn',
       'no-unused-vars': 'warn',
     },
   },

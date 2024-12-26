@@ -1,23 +1,12 @@
-import React from 'react';
+import IProduct from '../models/IProduct';
+import IProductDescription from '../models/IProductDescription';
 
-export type Product = {
-  id: string;
-  category?: string;
-  name: string;
-  price: string;
-  image: string;
-  description: string;
-  base_url: string;
-  created_at: string;
-  updated_at: string;
+type Props = {
+  item: IProduct;
 };
 
-type DescriptionSection = { [key: string]: string };
-
-export default function ProductDetail({ product }: { product: Product }) {
-  const description = JSON.parse(product.description) as {
-    [key: string]: DescriptionSection;
-  };
+export default function ProductDetail({ item }: Props) {
+  const description = JSON.parse(item.description) as IProductDescription;
 
   const tableClasses =
     'min-w-full border-separate border-spacing-0 rounded-lg border border-gray-300';
@@ -32,7 +21,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
   const renderDescriptionSection = (
     title: string,
-    section: DescriptionSection,
+    section: IProductDescription,
   ) => (
     <div key={title}>
       <h3 className="mb-4 pt-8 text-xl font-bold text-gray-900">{title}</h3>
@@ -61,8 +50,8 @@ export default function ProductDetail({ product }: { product: Product }) {
         {/* Product image */}
         <div className="lg:max-w-lg lg:self-center">
           <img
-            src={product.image}
-            alt={product.name}
+            src={item.image}
+            alt={item.name}
             className="w-full rounded-lg object-cover"
           />
         </div>
@@ -70,16 +59,14 @@ export default function ProductDetail({ product }: { product: Product }) {
         {/* Product information */}
         <div className="lg:self-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            {product.name}
+            {item.name}
           </h1>
           <div className="mt-6">
-            <h2 className="text-2xl font-medium text-gray-900">
-              {product.price}
-            </h2>
+            <h2 className="text-2xl font-medium text-gray-900">{item.price}</h2>
           </div>
           <div className="mt-8">
             <a
-              href={product.base_url}
+              href={item.base_url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-5 font-bold text-white hover:opacity-50"

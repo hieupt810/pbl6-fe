@@ -9,59 +9,42 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-export type SelectItem = {
-  id: string;
-  name: string;
-};
+import ISelectItem from '../models/ISelectItem';
 
 export default function CustomSelect({
-  param,
   label,
   options,
+  parameter,
   placeholder,
 }: {
-  param: string;
   label?: string;
-  options: SelectItem[];
+  options: ISelectItem[];
+  parameter: string;
   placeholder: string;
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selected, setSelected] = useState<SelectItem | null>(null);
-
-  const selectedId = searchParams.get(param);
-  useEffect(() => {
-    if (!selectedId) {
-      return;
-    }
-
-    const selectedItem = options.find((option) => option.id === selectedId);
-    if (selectedItem) {
-      setSelected(selectedItem);
-    } else {
-      setSearchParams((params) => {
-        params.delete(param);
-        return params;
-      });
-    }
-  }, [options, param, selectedId, setSearchParams]);
+  const [selected, setSelected] = useState<ISelectItem | null>(null);
 
   useEffect(() => {
-    if (selected) {
-      setSearchParams((params) => {
-        params.set(param, selected.id);
-        return params;
-      });
+    const paramValue = searchParams.get(parameter);
+    const initialSelected =
+      options.find((opt) => opt.value === paramValue) || null;
+    setSelected(initialSelected);
+  }, [parameter, options, searchParams]);
+
+  const handleChange = (value: ISelectItem | null) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (value) {
+      newSearchParams.set(parameter, value.value);
     } else {
-      setSearchParams((params) => {
-        params.delete(param);
-        return params;
-      });
+      newSearchParams.delete(parameter);
     }
-  }, [param, selected, setSearchParams]);
+    setSearchParams(newSearchParams);
+  };
 
   return (
     <div>
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={handleChange}>
         {label && (
           <Label className="block text-sm/6 font-medium text-gray-900">
             {label}
@@ -69,10 +52,10 @@ export default function CustomSelect({
         )}
 
         <div className="relative mt-2">
-          <ListboxButton className="relative w-48 cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm/6">
+          <ListboxButton className="relative w-56 cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm/6">
             <span className="flex items-center">
               <span className="ml-3 block truncate">
-                {selected ? selected.name : placeholder}
+                {selected ? selected.label : placeholder}
               </span>
             </span>
 
@@ -90,13 +73,13 @@ export default function CustomSelect({
           >
             {options.map((option) => (
               <ListboxOption
-                key={option.id}
+                key={option.value}
                 value={option}
                 className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
               >
                 <div className="flex items-center">
                   <span className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                    {option.name}
+                    {option.label}
                   </span>
                 </div>
 

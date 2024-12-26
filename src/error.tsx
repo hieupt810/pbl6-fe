@@ -1,4 +1,4 @@
-export default function ErrorPage() {
+export default function Error() {
   return (
     <main className="grid min-h-screen place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="text-center">
@@ -7,7 +7,7 @@ export default function ErrorPage() {
           Page not found
         </h1>
         <p className="mt-6 text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
-          Sorry, we couldn’t find the page you’re looking for.
+          Sorry, we couldn&apos;t find the page you&apos;re looking for.
         </p>
 
         <div className="mt-10 flex items-center justify-center">
