@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import ProductDetail from '../components/product/ProductDetail';
+import ProductDetail from '../components/ProductDetail';
 import api from '../lib/api';
 import IProduct from '../models/IProduct';
 
@@ -29,7 +29,7 @@ export default function Details() {
   return (
     <main className="mx-auto w-full max-w-screen-lg px-6 pt-20 lg:px-8">
       <div>
-        <ProductDetail product={product} />
+        <ProductDetail item={product} />
       </div>
     </main>
   );
