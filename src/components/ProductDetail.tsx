@@ -1,25 +1,12 @@
-import React from 'react';
+import IProduct from '../models/IProduct';
+import IProductDescription from '../models/IProductDescription';
 
-export type Product = {
-  id: string;
-  category?: string;
-  name: string;
-  price: string;
-  image: string;
-  description: string;
-  base: string;
-  created_at: string;
-  updated_at: string;
+type Props = {
+  item: IProduct;
 };
 
-export type ProductDescription = {
-  'Industry-specific attributes'?: { [key: string]: string };
-  'Other attributes'?: { [key: string]: string };
-  'Packaging and delivery'?: { [key: string]: string };
-};
-
-export default function ProductDetail({ product }: { product: Product }) {
-  const description = JSON.parse(product.description) as ProductDescription;
+export default function ProductDetail({ item }: Props) {
+  const description = JSON.parse(item.description) as IProductDescription;
 
   const tableClasses =
     'min-w-full border-separate border-spacing-0 rounded-lg border border-gray-300';
@@ -35,28 +22,25 @@ export default function ProductDetail({ product }: { product: Product }) {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:pb-48 sm:pt-2 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-        {/* Hình ảnh sản phẩm */}
         <div className="lg:max-w-lg lg:self-center">
           <img
-            src={product.image}
-            alt={product.name}
+            src={item.image}
+            alt={item.name}
             className="w-full rounded-lg object-cover"
           />
         </div>
 
-        {/* Thông tin sản phẩm */}
+        {/* Product information */}
         <div className="lg:self-center">
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-            {product.name}
+            {item.name}
           </h1>
           <div className="mt-6">
-            <h2 className="text-2xl font-medium text-gray-900">
-              {product.price}
-            </h2>
+            <h2 className="text-2xl font-medium text-gray-900">{item.price}</h2>
           </div>
           <div className="mt-8">
             <a
-              href={product.base}
+              href={item.base_url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-5 font-bold text-white hover:opacity-50"
@@ -80,7 +64,7 @@ export default function ProductDetail({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Phần thông tin chi tiết dạng bảng */}
+        {/* Table detail information */}
         <div className="mt-10 space-y-8 lg:col-span-2 lg:mt-0">
           {/* Industry-specific attributes */}
           {description['Industry-specific attributes'] &&
