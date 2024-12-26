@@ -21,7 +21,7 @@ export default function ProductDetail({ item }: Props) {
 
   return (
     <div className="bg-white">
-      <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:pb-48 sm:pt-2 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 py-4 sm:px-6 sm:pt-2 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
         <div className="lg:max-w-lg lg:self-center">
           <img
             src={item.image}
@@ -43,7 +43,7 @@ export default function ProductDetail({ item }: Props) {
               href={item.base_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-5 font-bold text-white hover:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 p-4 font-bold text-white hover:opacity-80"
             >
               <svg
                 className="h-6 w-6 brightness-100"
