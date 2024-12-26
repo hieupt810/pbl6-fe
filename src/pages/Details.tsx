@@ -20,17 +20,15 @@ export default function Details() {
 
   if (!product) {
     return (
-      <main className="mx-auto w-full max-w-screen-lg px-6 pt-20 lg:px-8">
+      <main className="mx-auto w-full max-w-screen-lg">
         <div>Loading</div>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto w-full max-w-screen-lg px-6 pt-20 lg:px-8">
-      <div>
-        <ProductDetail item={product} />
-      </div>
+    <main className="mx-auto w-full max-w-screen-lg">
+      <ProductDetail item={product} />
     </main>
   );
 }

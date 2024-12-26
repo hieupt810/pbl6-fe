@@ -69,7 +69,7 @@ export default function ProductDetail({ item }: Props) {
               href={item.base_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-5 font-bold text-white hover:opacity-50"
+              className="flex items-center justify-center gap-2 rounded-lg bg-indigo-600 p-4 font-bold text-white hover:opacity-80"
             >
               <svg
                 className="h-6 w-6 brightness-100"

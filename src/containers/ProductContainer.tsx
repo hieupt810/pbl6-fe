@@ -47,7 +47,7 @@ export default function ProductContainer() {
         Products from these e-commerce websites
       </h2>
 
-      <div className="py-4 md:py-8">
+      <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-8">
         <FilterList items={filters} />
         <ProductList items={products} />
       </div>
