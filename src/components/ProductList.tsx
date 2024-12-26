@@ -11,7 +11,7 @@ export default function ProductList({ items }: Props) {
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {items.map((item) => (
-          <a key={item.id} href={`/${item.id}/details`} className="group">
+          <a key={item.id} href={`/${item.id}`} className="group">
             <img
               alt={item.id}
               src={item.image}
