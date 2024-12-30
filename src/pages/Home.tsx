@@ -1,15 +1,13 @@
 import HeroContainer from '../containers/HeroContainer';
 import PartnerContainer from '../containers/PartnerContainer';
-import ProductContainer from '../containers/ProductContainer';
+import StatsContainer from '../containers/StatsContainer';
 
 export default function Home() {
   return (
-    <div>
+    <main className="flex w-full flex-col space-y-20">
       <HeroContainer />
-      <div className="mx-auto max-w-screen-xl">
-        <PartnerContainer />
-        <ProductContainer />
-      </div>
-    </div>
+      <StatsContainer />
+      <PartnerContainer />
+    </main>
   );
 }

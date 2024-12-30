@@ -6,23 +6,20 @@ type Props = {
 };
 
 export default function FilterList({ items }: Props) {
+  if (items.length === 0) {
+    return <div />;
+  }
+
   return (
-    <div className="flex flex-row items-center justify-center gap-4">
-      {items.length === 0 ? (
-        <>
-          <div className="h-9 w-56 animate-pulse rounded-md bg-gray-200" />
-          <div className="h-9 w-56 animate-pulse rounded-md bg-gray-200" />
-        </>
-      ) : (
-        items.map((item) => (
-          <CustomSelect
-            key={item.parameter}
-            options={item.options}
-            parameter={item.parameter}
-            placeholder={item.placeholder}
-          />
-        ))
-      )}
+    <div className="flex w-56 flex-col items-start justify-start gap-4">
+      {items.map((item) => (
+        <CustomSelect
+          key={item.parameter}
+          label={item.placeholder}
+          options={item.options}
+          parameter={item.parameter}
+        />
+      ))}
     </div>
   );
 }

@@ -20,12 +20,12 @@ const websitePartners: WebsitePartnersItem[] = [
 
 export default function PartnerContainer() {
   return (
-    <div className="bg-white">
-      <h2 className="text-center text-lg/8 font-semibold">
+    <div>
+      <h2 className="text-center text-lg/8 font-semibold text-gray-900">
         Trusted by the world&apos;s most popular e-commerce platforms
       </h2>
 
-      <div className="flex flex-col items-center justify-center gap-4 py-4 md:flex-row md:py-8">
+      <div className="flex flex-col items-center justify-around py-4 md:flex-row md:py-6">
         {websitePartners
           .sort((a, b) => a.alt.localeCompare(b.alt))
           .map((partner) => (
@@ -33,9 +33,7 @@ export default function PartnerContainer() {
               key={partner.alt}
               alt={partner.src}
               src={partner.src}
-              width={200}
-              height={50}
-              className="max-h-24 w-full object-contain"
+              className="max-h-20 w-full object-contain"
             />
           ))}
       </div>
