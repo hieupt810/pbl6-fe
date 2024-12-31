@@ -11,7 +11,8 @@ import IProduct from '../models/IProduct';
 import IProductsResponse from '../models/IProductsResponse';
 
 export default function Product() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [total, setTotal] = useState<number>(0);
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [products, setProducts] = useState<IProduct[]>([]);
 
@@ -25,6 +26,7 @@ export default function Product() {
     const resp = await api.get('/product', { params });
     const data = resp.data as IProductsResponse;
     setProducts(data.data);
+    setTotal(data.pagination.total);
   }
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function Product() {
   useEffect(() => {
     if (filters.length === 0) return;
 
-    const newSearchParams = new URLSearchParams();
+    const newSearchParams = new URLSearchParams(searchParams);
     for (const filter of filters) {
       const paramValue = searchParams.get(filter.parameter);
       const initialSelected =
@@ -46,9 +48,9 @@ export default function Product() {
       }
     }
     void fetchProducts(newSearchParams);
-  }, [filters, searchParams]);
+  }, [filters, searchParams, setSearchParams]);
 
-  if (filters.length === 0 || products.length === 0) {
+  if (filters.length === 0) {
     return (
       <Modal
         open={true}
@@ -59,8 +61,9 @@ export default function Product() {
   }
 
   return (
-    <div className="flex flex-row items-start justify-start gap-x-8">
-      <FilterList items={filters} />
+    <div className="relative flex flex-row items-start justify-start gap-x-8">
+      <FilterList items={filters} total={total} />
+      <div className="w-56" />
       <ProductList items={products} />
     </div>
   );
